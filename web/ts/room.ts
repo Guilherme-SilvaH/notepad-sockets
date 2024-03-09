@@ -5,4 +5,10 @@ if (roomNameLabel) {
     const params = new URLSearchParams(window.location.search);
     const roomName = params.get("name");
     roomNameLabel.innerText = roomName || ''
+
+    roomContentTextarea?.addEventListener("keyup", () => {
+       
+        
+    })
 }
+
