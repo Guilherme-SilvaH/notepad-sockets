@@ -9,21 +9,16 @@ if (roomNameLabel) {
     roomContentTextarea?.addEventListener("keyup", async (event: Event) => {
         console.log("change");
 
-        if (event.target instanceof HTMLInputElement) {
-            const { value } = event.target;
+        const { value } = event.target as HTMLInputElement;
 
-            await fetch(`http://localhost:3001/api/update-notepad`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ noteName: roomName, noteContent: value }),
-            });
-        }
+        await fetch(`http://localhost:3003/api/update-notepad`, {
+            method: "POST",
+            body: JSON.stringify({ noteName: roomName, noteContent: value })
+        });
     });
 
     window.addEventListener("load", async () => {
-        const data = await fetch(`http://localhost:3001/api/get-notepad/${roomName}`);
-   
+        const data = await fetch(`http://localhost:3003/api/get-notepad/${roomName}`);
+       
     });
 }
