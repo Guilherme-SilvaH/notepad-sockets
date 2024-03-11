@@ -1,19 +1,14 @@
 import { error } from "console";
-import { Redis } from "ioredis";
+import Redis from "../node_modules/ioredis/built/Redis";
 
-interface RedisConfig {
-    host: string;
-    port: number;
-    username: string;
-    password: string
-}
 
-export function getRedisInstance(config: RedisConfig): Redis {
+
+export function getRedisInstance(){
     const instance = new Redis({
-        host: config.host,
-        port: config.port,
-        username:config.username,
-        password: config.password
+        host: "redis-14215.c322.us-east-1-2.ec2.cloud.redislabs.com",
+        port: 14215,
+        username:"default",
+        password: "XCcc2pJdZUaCfwfzhyY26xcc0xTmGf1A"
     });
 
     instance.on("connect", () => console.log("Redis connected"))
