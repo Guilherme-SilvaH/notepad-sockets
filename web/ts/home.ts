@@ -8,5 +8,5 @@ joinRoomButton?.addEventListener("click", () => {
         
     }
 
-    window.location.href = `/web/room.html?name=${roomNameInput?.value}`;
+    window.location.href = `/web/room.html?name=${roomNameInput.value}`;
 });

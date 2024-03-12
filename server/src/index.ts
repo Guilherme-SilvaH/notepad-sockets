@@ -8,8 +8,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-app.listen(3003, () => {
-    console.log('server listening in port 3003');
+app.listen(5500, () => {
+    console.log('server listening in port 5500');
 });
 
 app.post('/api/update-notepad', async (req, res) => {

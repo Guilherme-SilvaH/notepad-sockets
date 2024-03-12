@@ -6,5 +6,5 @@ joinRoomButton === null || joinRoomButton === void 0 ? void 0 : joinRoomButton.a
         console.log("deu erro");
         return;
     }
-    window.location.href = `/web/room.html?name=${roomNameInput === null || roomNameInput === void 0 ? void 0 : roomNameInput.value}`;
+    window.location.href = `/web/room.html?name=${roomNameInput.value}`;
 });

@@ -10,19 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const roomNameLabel = document.getElementById("roomNameLabel");
 const roomContentTextarea = document.getElementById("notepadContent");
-if (roomNameLabel) {
-    const params = new URLSearchParams(window.location.search);
-    const roomName = params.get("name");
-    roomNameLabel.innerText = roomName || '';
-    roomContentTextarea === null || roomContentTextarea === void 0 ? void 0 : roomContentTextarea.addEventListener("keyup", (event) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("change");
-        const { value } = event.target;
-        yield fetch(`http://localhost:3003/api/update-notepad`, {
-            method: "POST",
-            body: JSON.stringify({ noteName: roomName, noteContent: value })
-        });
-    }));
-    window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield fetch(`http://localhost:3003/api/get-notepad/${roomName}`);
-    }));
-}
+const params = new URLSearchParams(window.location.search);
+const roomName = params.get("name");
+roomNameLabel.innerText = roomName !== null ? roomName : "Nome da Sala Não Fornecido";
+roomContentTextarea.addEventListener("keyup", (event) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("change");
+    const target = event.target;
+    const value = target.value;
+    yield fetch(`http://localhost:5500/api/update-notepad`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ noteName: roomName, noteContent: value })
+    });
+}));
+window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield fetch(`http://localhost:5500/api/get-notepad/${roomName}`).then(res => res.json());
+    roomContentTextarea.value = data.content;
+}));

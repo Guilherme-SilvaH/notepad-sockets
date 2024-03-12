@@ -19,8 +19,8 @@ const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
-app.listen(3003, () => {
-    console.log('server listening in port 3003');
+app.listen(5500, () => {
+    console.log('server listening in port 5500');
 });
 app.post('/api/update-notepad', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { noteName, noteContent } = req.body;
