@@ -53,8 +53,10 @@ const pusher = new Pusher('1e584492a40c7b198231', {
         }
     }
 });
+const userQuantityLabel = document.getElementById("userQty");
 if (roomName) {
     pusher.signin();
+    //Fill #userQty
     const channel = pusher.subscribe(roomName);
     // @ts-ignore
     channel.bind("updated-note", data => {
@@ -62,5 +64,15 @@ if (roomName) {
         if (data.content && data.userId !== pusher.sessionID) {
             roomContentTextarea.value = data.content;
         }
+    });
+    channel.bind("pusher:member_added", () => {
+        const Number = String;
+        userQuantityLabel.innerText = Number(userQuantityLabel.innerText) + 1;
+    });
+    channel.bind("pusher:member_removed", () => {
+        userQuantityLabel.innerText = (Number(userQuantityLabel.innerText) - 1).toString();
+    });
+    channel.bind("pusher:subscription_succeeded", () => {
+        userQuantityLabel.innerText = channel.members.count;
     });
 }
