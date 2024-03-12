@@ -54,3 +54,47 @@ app.get('/api/get-notepad/:noteName', async (req, res) => {
 
     return res.status(404).send();
 });
+
+
+interface UserChannelData {
+    id: string;
+    name: string;
+    // Add any other necessary properties here
+}
+
+
+app.post("/pusher/authorize", async(req,res) => {
+    const socketId = req.body.socket_id;
+    const user_Id = req.body.user_id;
+    const username = req.body.username;
+    const channelName = req.body.channel_name;
+
+    const data = {
+        user_Id: user_Id,
+        user_info: {
+            id: user_Id,
+            username,
+        }
+
+
+    }
+
+
+    const authorizedUser = pusher.authorizeChannel(socketId, channelName, )
+    res.status(200).send(authorizedUser)
+})
+
+
+app.post("/pusher/authenticate", async(req, res) => {
+    const socketId = req.body.socket_id;
+    const user_Id = req.body.user_id;
+    const username = req.body.username;
+
+    const user: UserChannelData = {
+        id: user_Id,
+        name: username
+    };
+
+    const pusherUser = pusher.authenticateUser(socketId, user);
+    return res.status(200).send(pusherUser)
+});

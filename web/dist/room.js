@@ -33,9 +33,28 @@ window.addEventListener("load", () => __awaiter(void 0, void 0, void 0, function
 }));
 // @ts-ignore
 const pusher = new Pusher('1e584492a40c7b198231', {
-    cluster: 'us2'
+    cluster: 'us2',
+    channelAuthorization: {
+        endpoint: "http://localhost:5500/pusher/authorize",
+        paramsProvider: () => {
+            return {
+                user_id: localStorage.getItem("user_id"),
+                username: localStorage.getItem("username"),
+            };
+        }
+    },
+    userAuthentication: {
+        endpoint: "http://localhost:5500/pusher/authenticate",
+        paramsProvider: () => {
+            return {
+                user_id: localStorage.getItem("user_id"),
+                username: localStorage.getItem("username"),
+            };
+        }
+    }
 });
 if (roomName) {
+    pusher.signin();
     const channel = pusher.subscribe(roomName);
     // @ts-ignore
     channel.bind("updated-note", data => {
