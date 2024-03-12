@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const redis_1 = require("./redis");
+const pusher_1 = __importDefault(require("./pusher"));
 const app = (0, express_1.default)();
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
@@ -23,12 +24,14 @@ app.listen(5500, () => {
     console.log('server listening in port 5500');
 });
 app.post('/api/update-notepad', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { noteName, noteContent } = req.body;
+    const { noteName, noteContent, userId } = req.body;
     const redisInstance = (0, redis_1.getRedisInstance)();
     const noteObj = {
         content: noteContent,
+        userId,
     };
     const expiry = 60000 * 60 * 24; // 24 hours
+    pusher_1.default.trigger(noteName, "updated-note", noteObj);
     redisInstance.set(noteName, JSON.stringify(noteObj), 'PX', expiry);
     return res.status(200).send(noteObj);
 }));
